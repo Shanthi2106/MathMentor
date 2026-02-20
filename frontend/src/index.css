@@ -1,0 +1,81 @@
+:root {
+  --bg: #0c0c0f;
+  --bgSoft: #12121a;
+  --surface: #1a1a24;
+  --surfaceHover: #22222e;
+  --surface2: #252532;
+  --text: #f0eef4;
+  --textMuted: #9896a4;
+  --textDim: #6b6980;
+  --accent: #7c6cf9;
+  --accentHover: #9588fa;
+  --accentDim: rgba(124, 108, 249, 0.18);
+  --accentGlow: rgba(124, 108, 249, 0.35);
+  --success: #4ade80;
+  --error: #f87171;
+  --errorBg: rgba(248, 113, 113, 0.12);
+  --border: #2a2a38;
+  --radius: 14px;
+  --radiusSm: 10px;
+  --radiusLg: 18px;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+  --font: 'DM Sans', system-ui, sans-serif;
+  --fontMono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  background-image:
+    /* Vignette: focus attention toward center */
+    radial-gradient(ellipse 100% 100% at 50% 50%, transparent 40%, rgba(0, 0, 0, 0.25) 100%),
+    /* Stronger gradient orbs */
+    radial-gradient(ellipse 90% 70% at 20% 10%, rgba(124, 108, 249, 0.2), transparent 50%),
+    radial-gradient(ellipse 70% 50% at 80% 20%, rgba(88, 80, 236, 0.16), transparent 45%),
+    radial-gradient(ellipse 60% 60% at 50% 90%, rgba(124, 108, 249, 0.11), transparent 50%),
+    radial-gradient(ellipse 50% 40% at 95% 70%, rgba(139, 92, 246, 0.09), transparent 40%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(124, 108, 249, 0.06), transparent 45%),
+    /* More visible dot grid (math / graph-paper feel) */
+    radial-gradient(circle at center, rgba(124, 108, 249, 0.06) 1px, transparent 1px),
+    /* Background images: grid and dots patterns, soft blob */
+    url(/grid-pattern.svg),
+    url(/dots-pattern.svg),
+    url(/blob.svg);
+  background-size:
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    100% 100%,
+    32px 32px,
+    64px 64px,
+    48px 48px,
+    cover;
+  background-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 50% 50%;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+}
