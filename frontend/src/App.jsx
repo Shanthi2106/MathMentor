@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
 
-const API = '/api'
+// Use backend origin in production (e.g. Vercel); locally Vite proxies /api to the dev server.
+const API = (import.meta.env.VITE_API_ORIGIN ?? '') + '/api'
 
 const EXAMPLE_PROMPTS = [
   'How do I add fractions with different denominators?',

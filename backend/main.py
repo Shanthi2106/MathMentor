@@ -18,9 +18,15 @@ app = FastAPI(
     version="1.0.0",
 )
 
+# Allow frontend origin from env (e.g. Vercel URL); keep local dev origins.
+_frontend_origin = os.getenv("FRONTEND_ORIGIN", "").strip()
+_origins = ["http://localhost:5173", "http://127.0.0.1:5173"]
+if _frontend_origin:
+    _origins.append(_frontend_origin.rstrip("/"))
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
