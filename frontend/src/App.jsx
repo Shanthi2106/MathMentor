@@ -4,6 +4,18 @@ import './App.css'
 // Use backend origin in production (e.g. Vercel); locally Vite proxies /api to the dev server.
 const API = (import.meta.env.VITE_API_ORIGIN ?? '') + '/api'
 
+async function parseJson(res) {
+  const ct = res.headers.get('content-type') || ''
+  if (!ct.includes('application/json')) {
+    throw new Error('Server returned a non-JSON response. Is the API running?')
+  }
+  try {
+    return await res.json()
+  } catch (e) {
+    throw new Error('Server returned invalid JSON. Is the API running?')
+  }
+}
+
 const EXAMPLE_PROMPTS = [
   'How do I add fractions with different denominators?',
   'Explain the Pythagorean theorem.',
@@ -33,7 +45,7 @@ function App() {
 
   useEffect(() => {
     fetch(`${API}/standards/grade/${grade}`)
-      .then((r) => r.json())
+      .then((r) => parseJson(r))
       .then((data) => {
         if (data.domains) setDomains(data.domains)
         else setDomains([])
@@ -65,7 +77,7 @@ function App() {
           domain_id: domainId || null,
         }),
       })
-      const data = await res.json()
+      const data = await parseJson(res)
       if (!res.ok) throw new Error(data.detail || 'Request failed')
 
       setMessages((m) => [
