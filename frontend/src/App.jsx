@@ -1,8 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
 
-// Use backend origin in production (e.g. Vercel); locally Vite proxies /api to the dev server.
-const API = (import.meta.env.VITE_API_ORIGIN ?? '') + '/api'
+// Backend API base: env override, or production fallback when not on localhost, or same-origin for dev.
+const PRODUCTION_API_ORIGIN = 'https://mathmentor-knx7.onrender.com'
+const origin =
+  import.meta.env.VITE_API_ORIGIN ||
+  (typeof window !== 'undefined' && !/localhost|127\.0\.0\.1/.test(window.location.hostname) ? PRODUCTION_API_ORIGIN : '')
+const API = origin + '/api'
 
 async function parseJson(res) {
   const ct = res.headers.get('content-type') || ''
