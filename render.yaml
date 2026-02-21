@@ -1,0 +1,16 @@
+# Render Web Service for Math Mentor API
+# https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: math-mentor-api
+    runtime: python
+    rootDir: .
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: PYTHONPATH=. uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: FRONTEND_ORIGIN
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
