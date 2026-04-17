@@ -54,15 +54,15 @@ OPENAI_MODEL=gpt-4o-mini
 - **Or manually:**
   ```powershell
   $env:PYTHONPATH = "."
-  py -3.13 -m uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000
+  py -3.13 -m uvicorn backend.main:app --reload --host 127.0.0.1 --port 8001
   ```
 - **Mac/Linux:**
   ```bash
   export PYTHONPATH=.
-  uvicorn backend.main:app --reload --host 127.0.0.1 --port 8000
+  uvicorn backend.main:app --reload --host 127.0.0.1 --port 8001
   ```
 
-API docs: **http://127.0.0.1:8000/docs**
+API docs: **http://127.0.0.1:8001/docs**
 
 ### 2. Frontend
 

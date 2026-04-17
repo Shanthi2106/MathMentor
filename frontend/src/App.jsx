@@ -1,11 +1,17 @@
 import { useState, useEffect, useRef } from 'react'
 import './App.css'
 
-// Backend API base: env override, or production fallback when not on localhost, or same-origin for dev.
+// Backend API base: VITE_API_ORIGIN wins; in `npm run dev` always use same-origin /api (Vite proxy),
+// so LAN URLs like http://192.168.x.x:5173 still hit your local FastAPI, not Render.
 const PRODUCTION_API_ORIGIN = 'https://mathmentor-knx7.onrender.com'
 const origin =
   import.meta.env.VITE_API_ORIGIN ||
-  (typeof window !== 'undefined' && !/localhost|127\.0\.0\.1/.test(window.location.hostname) ? PRODUCTION_API_ORIGIN : '')
+  (import.meta.env.DEV
+    ? ''
+    : typeof window !== 'undefined' &&
+        !/localhost|127\.0\.0\.1/.test(window.location.hostname)
+      ? PRODUCTION_API_ORIGIN
+      : '')
 const API = origin + '/api'
 
 async function parseJson(res) {
@@ -22,9 +28,9 @@ async function parseJson(res) {
 
 const EXAMPLE_PROMPTS = [
   'How do I add fractions with different denominators?',
+  'Walk me through solving 2x + 5 = 15 step by step.',
   'Explain the Pythagorean theorem.',
-  'What is place value?',
-  'How do I solve 2x + 5 = 15?',
+  'Give me a few problems like: A shirt costs $24 with 15% off—what do I pay?',
 ]
 
 function SendIcon() {
@@ -164,8 +170,11 @@ function App() {
       <main className="chat">
         {messages.length === 0 && (
           <div className="welcome">
-            <p>Ask any math question. Answers are tailored to your grade and aligned with USA Common Core State Standards.</p>
-            <p className="hint">Click an example below or type your own.</p>
+            <p>
+              Ask any math question. The mentor uses numbered steps for problems and adds similar practice questions
+              when that fits what you asked.
+            </p>
+            <p className="hint">Click an example below or type your own. You can ask for more problems like the last one anytime.</p>
             <div className="examplePrompts">
               {EXAMPLE_PROMPTS.map((prompt, i) => (
                 <button

@@ -3,9 +3,16 @@ API for Common Core math standards (grades and domains).
 """
 from fastapi import APIRouter
 
+from backend.health_payload import openai_health_status
 from backend.standards import COMMON_CORE_MATH_BY_GRADE, STANDARDS_FOR_MATHEMATICAL_PRACTICE
 
 router = APIRouter()
+
+
+@router.get("/health")
+def health_check(probe: bool = False):
+    """Same payload as GET /api/health. ?probe=true runs a live auth check to the LLM base URL."""
+    return openai_health_status(probe=probe)
 
 
 @router.get("/grades")
