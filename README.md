@@ -33,19 +33,24 @@ From the **project root** (`Tutor`):
   pip install -r backend/requirements.txt
   ```
 
-**Set your OpenAI API key** (required for live answers):
+**Set your OpenAI API key** (required for live answers).
+
+The backend reads credentials from environment variables only — no keys are ever hardcoded in source. The recommended workflow is a project-root `.env` file, which is git-ignored.
+
+1. Copy the template:
+   ```bash
+   cp .env.example .env
+   ```
+2. Open `.env` and fill in your real values (`OPENAI_API_KEY`, `DATABASE_URL`, etc.).
+
+Alternatively, export the variable in your shell instead of using `.env`:
 
 - **Windows (PowerShell):**  
   `$env:OPENAI_API_KEY = "your-key-here"`
 - **Mac/Linux:**  
   `export OPENAI_API_KEY=your-key-here`
 
-Optional: create a `.env` in the project root with:
-
-```
-OPENAI_API_KEY=your-key-here
-OPENAI_MODEL=gpt-4o-mini
-```
+> **Never commit `.env`.** It is listed in `.gitignore`. If a key is ever pushed to a remote, rotate it immediately at the provider (e.g. https://platform.openai.com/api-keys).
 
 **Run the API** (from project root):
 
