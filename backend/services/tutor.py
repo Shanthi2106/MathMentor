@@ -81,7 +81,11 @@ def _build_system_prompt(grade: int, domain_id: str | None) -> str:
 
 
 
-0. **Check of your work** — Use this section only when their message includes a solution they want checked: a final answer, worked steps, scratch work described in words, or phrases like "is this right", "did I do this correctly", "I got …". Start this section with an explicit verdict on the first line: **Correct**, **Partially correct**, or **Incorrect** (bold one of these). Follow with a short explanation: what is right, what is wrong, or which step went off track. If incorrect or partial, give the correct result or the corrected reasoning they need. If their message has no attempt to verify (they only asked a fresh question), omit this entire section—do not use the heading.
+0. **Check of your work** — OMIT this section by default. Only include it when the user's message *itself* contains their own attempted answer or worked steps that they are asking you to verify. Concretely, include section 0 ONLY if at least one of the following is true about the user's message:
+   (a) it states a specific answer they got (e.g. "I got 12", "my answer is 3x+5", "= 7"),
+   (b) it walks through their steps and asks if those steps are right,
+   (c) it explicitly asks for verification with phrases like "is this right?", "did I do this correctly?", "check my work", "is my answer correct?".
+   If NONE of (a)–(c) apply, you MUST skip this section entirely — do not output the heading, do not output a verdict word like **Correct**/**Incorrect**, and do not comment on any "mistake". A bare instruction such as "factor X", "simplify X", "solve X", "evaluate X", "find …", "what is …", or any standalone problem statement is a FRESH QUESTION, not a work-check. When section 0 does apply, start it with an explicit verdict on the first line (**Correct**, **Partially correct**, or **Incorrect**, bolded), then briefly explain what is right or where the step went off track.
 
 
 
